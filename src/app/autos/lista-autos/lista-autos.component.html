@@ -1,0 +1,69 @@
+
+    <div class="card">
+        <div class="card-header">
+            <h1>{{tituloListaAutos}}</h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Filtrar por:</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" [(ngModel)]="filtro">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Filtrar por: {{ filtro }}</h3>
+                </div>
+            </div>
+        </div>
+        
+            <table class="table" *ngIf="listaAutos.length>0">
+                <thead>
+                    <tr class="text-primary">
+                        <th>
+                            <button class="btn btn-primary"
+                                    (click)="muestraImagenes()">
+                                {{ muestraImagen ? 'Oculta' : 'Muestra' }} imagen
+                            </button>
+                        </th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Año</th>
+                        <th>Color</th>
+                        <th>Kil&oacute;metros</th>
+                        <th>Precio</th>
+                        <th>Calificaci&oacute;n</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr class="flex"
+                        *ngFor="let auto of listaAutosFiltrados">
+                        <td>
+                            <p *ngIf="muestraImagen"> 
+                                <img [src]="auto.imagenUrl"
+                                    [style.width.px]="imageWidth"
+                                    [style.margen.px]="imageMargin"> 
+                            </p>
+                        </td>
+                        <td>{{ auto.marca }}</td>
+                        <td><a [routerLink]="['/auto', auto.id]">{{ auto.modelo | lowercase | aEspacio:"-" }}</a></td>
+                        <td>{{ auto.anio }}</td>
+                        <td>{{ auto.color }}</td>
+                        <td>{{ auto.kilometros | number }}</td>
+                        <td>{{ auto.precio | currency }}</td>
+                        <td>
+                            <estrellas
+                                [calificacion] = "auto.calificacion"
+                                (starsClick) = "onClickCalificacion($event)">
+                            </estrellas>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+       
+    </div>
+
+    
